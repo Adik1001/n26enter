@@ -29,41 +29,40 @@ function Lobby({ onSelectBot, onSelectMultiplayer }: { onSelectBot: () => void; 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-6">
       <div className="glass max-w-2xl w-full p-10 space-y-8">
-        <div className="text-center">
-          <h1 className="font-display text-3xl uppercase tracking-widest neon-cyan">Command Center</h1>
-          <p className="text-sm text-muted-foreground mt-2">Choose your battle mode</p>
+        <div className="flex items-start justify-between gap-6 flex-wrap">
+          <div>
+            <h1 className="font-display text-3xl uppercase tracking-widest">Play</h1>
+            <p className="text-sm text-muted-foreground mt-2">Pick a mode. Get in. No noise.</p>
+          </div>
+          <a href="/leaderboard" className="text-xs text-muted-foreground hover:text-foreground transition">
+            Leaderboard →
+          </a>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-5">
           <button
             onClick={() => { sfx.click(); onSelectBot(); }}
-            className="glass p-6 text-left space-y-3 hover:border-[var(--cyan)] transition group rounded-lg border border-border"
+            className="glass p-6 text-left space-y-3 hover:border-border/80 transition group rounded-lg border border-border"
           >
-            <div className="text-3xl">🤖</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Solo</div>
             <div>
-              <div className="font-display text-lg uppercase tracking-widest neon-cyan group-hover:brightness-125">vs Bot</div>
-              <div className="text-xs text-muted-foreground mt-1">Solo battle against AI — Easy, Medium, or Hard difficulty</div>
+              <div className="font-display text-lg uppercase tracking-widest text-foreground">Vs Bot</div>
+              <div className="text-xs text-muted-foreground mt-1">Adaptive AI with three difficulty levels</div>
             </div>
             <div className="text-xs text-muted-foreground">Unlimited · Play offline</div>
           </button>
 
           <button
             onClick={() => { sfx.click(); onSelectMultiplayer(); }}
-            className="glass p-6 text-left space-y-3 hover:border-[var(--cyan)] transition group rounded-lg border border-border"
+            className="glass p-6 text-left space-y-3 hover:border-border/80 transition group rounded-lg border border-border"
           >
-            <div className="text-3xl">🎮</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Online</div>
             <div>
-              <div className="font-display text-lg uppercase tracking-widest neon-cyan group-hover:brightness-125">vs Human</div>
-              <div className="text-xs text-muted-foreground mt-1">Real-time multiplayer — 2 to 4 players</div>
+              <div className="font-display text-lg uppercase tracking-widest text-foreground">Multiplayer</div>
+              <div className="text-xs text-muted-foreground mt-1">Share a link. Play 2–4 players in realtime</div>
             </div>
             <div className="text-xs text-muted-foreground">Timed or unlimited · Custom fleets</div>
           </button>
-        </div>
-
-        <div className="text-center">
-          <a href="/leaderboard" className="text-xs text-muted-foreground hover:text-foreground transition">
-            🏆 Global Ranklist →
-          </a>
         </div>
       </div>
     </div>

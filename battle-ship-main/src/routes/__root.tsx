@@ -85,26 +85,39 @@ function NavBar() {
     <>
       <header className="relative z-10 px-5 h-16 flex items-center justify-between border-b border-border/40 backdrop-blur-md bg-background/40">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-md border border-[var(--cyan)]/60 flex items-center justify-center neon-cyan font-display">⌬</div>
+          <div className="w-8 h-8 rounded-md border border-border flex items-center justify-center font-display">
+            ⌬
+          </div>
           <div className="font-display uppercase tracking-widest text-sm">
-            <span className="neon-cyan">Battleship</span>
+            <span className="text-foreground">Battleship</span>
           </div>
         </Link>
         <nav className="flex items-center gap-2">
-          <Link to="/" className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground">Home</Link>
-          <Link to="/play" className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground">Play</Link>
-          {user && <Link to="/stats" className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground">Stats</Link>}
+          <Link to="/play" className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground">
+            Play
+          </Link>
+          {user && (
+            <Link to="/stats" className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground">
+              Stats
+            </Link>
+          )}
           <button
             onClick={() => setRules(true)}
-            className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground border border-border rounded-md"
+            className="px-3 py-1.5 text-xs font-display uppercase tracking-widest text-muted-foreground hover:text-foreground"
           >
             Rules
           </button>
-          <ThemeToggle />
+          <div className="hidden sm:block">
+            <ThemeToggle />
+          </div>
           {user ? (
-            <button onClick={() => signOut()} className="btn-danger !py-1.5 !px-3 !text-xs">Sign Out</button>
+            <button onClick={() => signOut()} className="btn-danger !py-1.5 !px-3 !text-xs">
+              Sign Out
+            </button>
           ) : (
-            <Link to="/login" className="btn-cyber !py-1.5 !px-3 !text-xs">Login</Link>
+            <Link to="/login" className="btn-cyber !py-1.5 !px-3 !text-xs">
+              Login
+            </Link>
           )}
         </nav>
       </header>

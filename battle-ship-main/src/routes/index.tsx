@@ -21,22 +21,22 @@ function Index() {
       >
         <div className="text-center mb-8">
           <div className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
-            ▰ Tactical Naval Simulator
+            Naval tactics, distilled
           </div>
-          <h1 className="font-display text-5xl md:text-6xl uppercase neon-cyan leading-none">
+          <h1 className="font-display text-5xl md:text-6xl uppercase leading-none">
             Battleship
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Choose how to enter the war room.
+            Everything you need. Nothing you don’t.
           </p>
         </div>
 
         <div className="glass p-6 space-y-3">
-          <Link to="/login" className="btn-cyber w-full">
-            Log In / Sign Up
+          <Link to="/play" className="btn-cyber w-full">
+            Play
           </Link>
-          <Link to="/play" className="btn-danger w-full">
-            Play as Guest
+          <Link to="/login" className="btn-danger w-full">
+            Sign in
           </Link>
           <p className="text-[10px] text-muted-foreground text-center pt-2">
             Guests can play full matches. Sign in to save match history & stats.
