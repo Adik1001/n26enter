@@ -10,21 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StatsRouteImport } from './routes/stats'
-import { Route as RoomRoomIdRouteImport } from './routes/room.$roomId'
 import { Route as PlayRouteImport } from './routes/play'
-import { Route as MpSessionIdRouteImport } from './routes/mp.$sessionId'
-import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RoomRoomIdRouteImport } from './routes/room.$roomId'
+import { Route as MpSessionIdRouteImport } from './routes/mp.$sessionId'
 
 const StatsRoute = StatsRouteImport.update({
   id: '/stats',
   path: '/stats',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoomRoomIdRoute = RoomRoomIdRouteImport.update({
-  id: '/room/$roomId',
-  path: '/room/$roomId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlayRoute = PlayRouteImport.update({
@@ -32,9 +27,9 @@ const PlayRoute = PlayRouteImport.update({
   path: '/play',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MpSessionIdRoute = MpSessionIdRouteImport.update({
-  id: '/mp/$sessionId',
-  path: '/mp/$sessionId',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeaderboardRoute = LeaderboardRouteImport.update({
@@ -42,61 +37,88 @@ const LeaderboardRoute = LeaderboardRouteImport.update({
   path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomRoomIdRoute = RoomRoomIdRouteImport.update({
+  id: '/room/$roomId',
+  path: '/room/$roomId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MpSessionIdRoute = MpSessionIdRouteImport.update({
+  id: '/mp/$sessionId',
+  path: '/mp/$sessionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/mp/$sessionId': typeof MpSessionIdRoute
+  '/login': typeof LoginRoute
   '/play': typeof PlayRoute
-  '/room/$roomId': typeof RoomRoomIdRoute
   '/stats': typeof StatsRoute
+  '/mp/$sessionId': typeof MpSessionIdRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/mp/$sessionId': typeof MpSessionIdRoute
+  '/login': typeof LoginRoute
   '/play': typeof PlayRoute
-  '/room/$roomId': typeof RoomRoomIdRoute
   '/stats': typeof StatsRoute
+  '/mp/$sessionId': typeof MpSessionIdRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/mp/$sessionId': typeof MpSessionIdRoute
+  '/login': typeof LoginRoute
   '/play': typeof PlayRoute
-  '/room/$roomId': typeof RoomRoomIdRoute
   '/stats': typeof StatsRoute
+  '/mp/$sessionId': typeof MpSessionIdRoute
+  '/room/$roomId': typeof RoomRoomIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/leaderboard' | '/mp/$sessionId' | '/play' | '/room/$roomId' | '/stats'
+  fullPaths:
+    | '/'
+    | '/leaderboard'
+    | '/login'
+    | '/play'
+    | '/stats'
+    | '/mp/$sessionId'
+    | '/room/$roomId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/leaderboard' | '/mp/$sessionId' | '/play' | '/room/$roomId' | '/stats'
-  id: '__root__' | '/' | '/login' | '/leaderboard' | '/mp/$sessionId' | '/play' | '/room/$roomId' | '/stats'
+  to:
+    | '/'
+    | '/leaderboard'
+    | '/login'
+    | '/play'
+    | '/stats'
+    | '/mp/$sessionId'
+    | '/room/$roomId'
+  id:
+    | '__root__'
+    | '/'
+    | '/leaderboard'
+    | '/login'
+    | '/play'
+    | '/stats'
+    | '/mp/$sessionId'
+    | '/room/$roomId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
   LeaderboardRoute: typeof LeaderboardRoute
-  MpSessionIdRoute: typeof MpSessionIdRoute
+  LoginRoute: typeof LoginRoute
   PlayRoute: typeof PlayRoute
-  RoomRoomIdRoute: typeof RoomRoomIdRoute
   StatsRoute: typeof StatsRoute
+  MpSessionIdRoute: typeof MpSessionIdRoute
+  RoomRoomIdRoute: typeof RoomRoomIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -108,32 +130,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StatsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/room/$roomId': {
-      id: '/room/$roomId'
-      path: '/room/$roomId'
-      fullPath: '/room/$roomId'
-      preLoaderRoute: typeof RoomRoomIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/play': {
       id: '/play'
       path: '/play'
       fullPath: '/play'
       preLoaderRoute: typeof PlayRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mp/$sessionId': {
-      id: '/mp/$sessionId'
-      path: '/mp/$sessionId'
-      fullPath: '/mp/$sessionId'
-      preLoaderRoute: typeof MpSessionIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leaderboard': {
-      id: '/leaderboard'
-      path: '/leaderboard'
-      fullPath: '/leaderboard'
-      preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -143,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -150,18 +158,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/room/$roomId': {
+      id: '/room/$roomId'
+      path: '/room/$roomId'
+      fullPath: '/room/$roomId'
+      preLoaderRoute: typeof RoomRoomIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mp/$sessionId': {
+      id: '/mp/$sessionId'
+      path: '/mp/$sessionId'
+      fullPath: '/mp/$sessionId'
+      preLoaderRoute: typeof MpSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
   LeaderboardRoute: LeaderboardRoute,
-  MpSessionIdRoute: MpSessionIdRoute,
+  LoginRoute: LoginRoute,
   PlayRoute: PlayRoute,
-  RoomRoomIdRoute: RoomRoomIdRoute,
   StatsRoute: StatsRoute,
+  MpSessionIdRoute: MpSessionIdRoute,
+  RoomRoomIdRoute: RoomRoomIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "@/lib/auth";
 import { ThemeProvider, useTheme } from "@/lib/theme";
 import { CyberModal } from "@/components/game/CyberModal";
 import { Toaster } from "sonner";
+import { CursorEffect } from "@/components/ui/CursorEffect";
 
 import appCss from "../styles.css?url";
 
@@ -147,6 +148,7 @@ function RootComponent() {
     <ThemeProvider>
       <AuthProvider>
         <div className="relative min-h-screen">
+          <CursorEffect />
           <NavBar />
           <main className="relative z-10">
             <Outlet />
