@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { GameScreen } from "@/components/game/GameScreen";
 import { useAuth } from "@/lib/auth";
 import {
@@ -26,12 +27,14 @@ function PlayPage() {
 }
 
 function Lobby({ onSelectBot, onSelectMultiplayer }: { onSelectBot: () => void; onSelectMultiplayer: () => void }) {
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-6">
-      <div className="glass max-w-2xl w-full p-10 space-y-8">
+      <div className="glass max-w-3xl w-full p-12 space-y-10">
         <div className="flex items-start justify-between gap-6 flex-wrap">
           <div>
-            <h1 className="font-display text-3xl uppercase tracking-widest">Play</h1>
+            <h1 className="font-display text-4xl uppercase tracking-widest">Play</h1>
             <p className="text-sm text-muted-foreground mt-2">Pick a mode. Get in. No noise.</p>
           </div>
           <a href="/leaderboard" className="text-xs text-muted-foreground hover:text-foreground transition">
@@ -39,30 +42,68 @@ function Lobby({ onSelectBot, onSelectMultiplayer }: { onSelectBot: () => void; 
           </a>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-5">
-          <button
+        <div className="grid sm:grid-cols-2 gap-8">
+          <motion.button
             onClick={() => { sfx.click(); onSelectBot(); }}
-            className="glass p-6 text-left space-y-3 hover:border-border/80 transition group rounded-lg border border-border"
+            className="glass p-8 text-left space-y-4 hover:border-border/80 transition group rounded-xl border border-border relative overflow-hidden"
+            whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
+            onHoverStart={() => setHoveredCard('bot')}
+            onHoverEnd={() => setHoveredCard(null)}
           >
-            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Solo</div>
-            <div>
-              <div className="font-display text-lg uppercase tracking-widest text-foreground">Vs Bot</div>
-              <div className="text-xs text-muted-foreground mt-1">Adaptive AI with three difficulty levels</div>
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-br from-[var(--cyan)]/5 to-transparent opacity-0"
+              animate={{ opacity: hoveredCard === 'bot' ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+            />
+            <div className="relative z-10">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Solo</div>
+              <div>
+                <motion.div 
+                  className="font-display text-xl uppercase tracking-widest text-foreground"
+                  animate={{
+                    textShadow: hoveredCard === 'bot' ? '0 0 20px oklch(0.96 0 0 / 0.6)' : 'none',
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Vs Bot
+                </motion.div>
+                <div className="text-xs text-muted-foreground mt-1">Adaptive AI with three difficulty levels</div>
+              </div>
+              <div className="text-xs text-muted-foreground">Unlimited · Play offline</div>
             </div>
-            <div className="text-xs text-muted-foreground">Unlimited · Play offline</div>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             onClick={() => { sfx.click(); onSelectMultiplayer(); }}
-            className="glass p-6 text-left space-y-3 hover:border-border/80 transition group rounded-lg border border-border"
+            className="glass p-8 text-left space-y-4 hover:border-border/80 transition group rounded-xl border border-border relative overflow-hidden"
+            whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
+            onHoverStart={() => setHoveredCard('mp')}
+            onHoverEnd={() => setHoveredCard(null)}
           >
-            <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Online</div>
-            <div>
-              <div className="font-display text-lg uppercase tracking-widest text-foreground">Multiplayer</div>
-              <div className="text-xs text-muted-foreground mt-1">Share a link. Play 2–4 players in realtime</div>
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-br from-[var(--enemy)]/5 to-transparent opacity-0"
+              animate={{ opacity: hoveredCard === 'mp' ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+            />
+            <div className="relative z-10">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Online</div>
+              <div>
+                <motion.div 
+                  className="font-display text-xl uppercase tracking-widest text-foreground"
+                  animate={{
+                    textShadow: hoveredCard === 'mp' ? '0 0 20px oklch(0.62 0.25 25 / 0.6)' : 'none',
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  Multiplayer
+                </motion.div>
+                <div className="text-xs text-muted-foreground mt-1">Share a link. Play 2–4 players in realtime</div>
+              </div>
+              <div className="text-xs text-muted-foreground">Timed or unlimited · Custom fleets</div>
             </div>
-            <div className="text-xs text-muted-foreground">Timed or unlimited · Custom fleets</div>
-          </button>
+          </motion.button>
         </div>
       </div>
     </div>
@@ -79,6 +120,7 @@ function CreateMultiplayer({ onBack }: { onBack: () => void }) {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const total = fleetTotal(fleet);
 
@@ -130,20 +172,31 @@ function CreateMultiplayer({ onBack }: { onBack: () => void }) {
 
           <div>
             <label className="text-xs font-display uppercase tracking-widest text-muted-foreground mb-2 block">Players</label>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               {([2, 3, 4] as const).map((n) => (
-                <button
+                <motion.button
                   key={n}
                   type="button"
                   onClick={() => { sfx.click(); setPlayerCount(n); }}
-                  className={`flex-1 py-2 rounded-md text-sm font-display uppercase tracking-widest border transition ${
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onHoverStart={() => setHoveredButton(`player-${n}`)}
+                  onHoverEnd={() => setHoveredButton(null)}
+                  className={`flex-1 py-3 rounded-lg text-sm font-display uppercase tracking-widest border transition relative overflow-hidden ${
                     playerCount === n
                       ? "border-[var(--cyan)] text-[var(--cyan)] bg-[var(--cyan)]/10"
                       : "border-border text-muted-foreground"
                   }`}
                 >
-                  {n}P
-                </button>
+                  <motion.span
+                    animate={{
+                      scale: hoveredButton === `player-${n}` ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {n}P
+                  </motion.span>
+                </motion.button>
               ))}
             </div>
             {playerCount > 2 && (
@@ -155,20 +208,31 @@ function CreateMultiplayer({ onBack }: { onBack: () => void }) {
 
           <div>
             <label className="text-xs font-display uppercase tracking-widest text-muted-foreground mb-2 block">Timer Mode</label>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               {(["4min", "10min", "infinite"] as GameMode[]).map((m) => (
-                <button
+                <motion.button
                   key={m}
                   type="button"
                   onClick={() => { sfx.click(); setGameMode(m); }}
-                  className={`flex-1 py-2 rounded-md text-xs font-display uppercase tracking-widest border transition ${
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onHoverStart={() => setHoveredButton(`mode-${m}`)}
+                  onHoverEnd={() => setHoveredButton(null)}
+                  className={`flex-1 py-3 rounded-lg text-xs font-display uppercase tracking-widest border transition relative overflow-hidden ${
                     gameMode === m
                       ? "border-[var(--cyan)] text-[var(--cyan)] bg-[var(--cyan)]/10"
                       : "border-border text-muted-foreground"
                   }`}
                 >
-                  {m === "infinite" ? "∞ No Limit" : m === "4min" ? "4 Min" : "10 Min"}
-                </button>
+                  <motion.span
+                    animate={{
+                      scale: hoveredButton === `mode-${m}` ? 1.1 : 1,
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {m === "infinite" ? "∞ No Limit" : m === "4min" ? "4 Min" : "10 Min"}
+                  </motion.span>
+                </motion.button>
               ))}
             </div>
             {gameMode !== "infinite" && (
@@ -246,9 +310,23 @@ function CreateMultiplayer({ onBack }: { onBack: () => void }) {
 
           {error && <p className="text-xs text-[var(--enemy)]">{error}</p>}
 
-          <button disabled={creating} className="btn-cyber w-full">
-            {creating ? "Creating…" : "Create Battle & Get Link"}
-          </button>
+          <motion.button
+            disabled={creating} 
+            className="btn-cyber btn-pulse w-full"
+            whileHover={{ scale: creating ? 1 : 1.02 }}
+            whileTap={{ scale: creating ? 1 : 0.98 }}
+            onHoverStart={() => setHoveredButton('create')}
+            onHoverEnd={() => setHoveredButton(null)}
+          >
+            <motion.span
+              animate={{
+                textShadow: hoveredButton === 'create' && !creating ? '0 0 30px oklch(0.96 0 0 / 0.8)' : '0 0 20px oklch(0.96 0 0 / 0.5)',
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {creating ? "Creating…" : "Create Battle & Get Link"}
+            </motion.span>
+          </motion.button>
         </form>
       </div>
     </div>
